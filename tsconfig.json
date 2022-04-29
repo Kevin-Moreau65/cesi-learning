@@ -1,25 +1,9 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es2017",
+        "target": "esnext",
         "rootDir": "./",
         "esModuleInterop": true,
-        "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true,
-        "baseUrl": ".",
-        "paths": {
-            "$routes": [
-                "./routes"
-            ],
-            "$controllers": [
-                "./controllers"
-            ],
-            "$utils": [
-                "./utils"
-            ],
-            "$models": [
-                "./models"
-            ]
+        "allowJs": true
         }
     }
-}
