@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 type urlParam = {
 	method: string;
 	path?: string;
@@ -22,9 +21,11 @@ export default class MicroService {
 				result += path.startsWith('/') ? path : '/' + path;
 			return result;
 		};
-		let headers = {};
-		if (token) headers = { Authorization: token };
-		let init;
+		const headers = {
+			'Content-Type': 'application/json',
+			Authorization: token
+		};
+		let init: RequestInit;
 		if (method === 'GET') {
 			init = {
 				headers,
@@ -34,7 +35,7 @@ export default class MicroService {
 			init = {
 				headers,
 				method,
-				body
+				body: body ? JSON.stringify(body) : undefined
 			};
 		}
 		const res = await fetch(`${this.url}${part()}`, {
