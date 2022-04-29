@@ -12,10 +12,18 @@ app.use(
 app.use(helmet.hidePoweredBy());
 app.use(helmet.noSniff());
 app.use(helmet.xssFilter());
-app.use(helmet({ crossOriginEmbedderPolicy: false }));
+app.use(
+	helmet({ crossOriginEmbedderPolicy: false })
+);
 app.use(express.json({ limit: '50mb' }));
-app.get('/', (req, res) => res.send('Salut ca va ?'));
-app.use('*', (req, res) => res.send('Retour arrière frérot'));
+app.get('/', (req, res) =>
+	res.send('Salut ca va ?')
+);
+app.use('*', (req, res) =>
+	res.send('Retour arrière frérot')
+);
 app.listen(process.env.SERVER_PORT, () => {
-	console.log(`Le serveur est OK sur le port ${process.env.SERVER_PORT}`);
+	console.log(
+		`Le serveur est OK sur le port ${process.env.SERVER_PORT}`
+	);
 });
