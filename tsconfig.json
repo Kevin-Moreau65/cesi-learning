@@ -4,6 +4,8 @@
         "target": "es2017",
         "rootDir": "./",
         "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
         "baseUrl": ".",
         "paths": {
             "$routes": [
