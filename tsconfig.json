@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2017",
+        "rootDir": "./",
+        "esModuleInterop": true,
+        "baseUrl": ".",
+        "paths": {
+            "$routes": [
+                "./routes"
+            ],
+            "$controllers": [
+                "./controllers"
+            ],
+            "$utils": [
+                "./utils"
+            ],
+            "$models": [
+                "./models"
+            ]
+        }
+    }
+}
