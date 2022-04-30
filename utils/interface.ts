@@ -6,3 +6,8 @@ export type Middleware = (
 	next: NextFunction
 ) => NextFunction | Response;
 export type Controller = (req: Request, res: Response) => Response;
+export enum Roles {
+	Student,
+	Teacher,
+	Admin
+}

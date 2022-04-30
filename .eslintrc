@@ -19,6 +19,7 @@
       "no-irregular-whitespace": "error",
       "no-var":"error",
       "prefer-const": "warn",
+      "no-useless-escape": "off",
       "@typescript-eslint/naming-convention": [
         "error",
         {

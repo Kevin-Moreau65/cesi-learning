@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import { Middleware } from './interface';
 
-const extractBearer = (authorization) => {
+const extractBearer = (authorization: string | undefined) => {
 	if (typeof authorization !== 'string') {
 		return false;
 	}
@@ -16,14 +16,13 @@ const checkTokenMiddleware: Middleware = (req, res, next) => {
 		req.headers.authorization && extractBearer(req.headers.authorization);
 
 	if (!token) {
-		return res.status(401).json({ message: 'Ho le petit malin !!!' });
+		return res.status(401).json({ message: 'Unauthorized' });
 	}
 
 	jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
 		if (err) {
 			return res.status(401).json({ message: 'Bad token' });
 		}
-
 		next();
 	});
 };
