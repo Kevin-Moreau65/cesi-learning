@@ -11,20 +11,18 @@ const extractBearer = (authorization: string | undefined) => {
 	return matches && matches[2];
 };
 
-const checkTokenMiddleware: Middleware = (req, res, next) => {
-	const token =
-		req.headers.authorization && extractBearer(req.headers.authorization);
+export const checkTokenMiddleware: Middleware = (req, res, next) => {
+	const token = req.headers.authorization && extractBearer(req.headers.authorization);
 
 	if (!token) {
 		return res.status(401).json({ message: 'Unauthorized' });
 	}
 
-	jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+	jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken: { id: string }) => {
 		if (err) {
 			return res.status(401).json({ message: 'Bad token' });
 		}
+		res.locals = { id: decodedToken.id };
 		next();
 	});
 };
-
-module.exports = checkTokenMiddleware;
