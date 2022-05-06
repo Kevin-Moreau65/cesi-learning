@@ -4,7 +4,7 @@ import checkRole from '../utils/checkRole';
 const routerUser = express.Router();
 routerUser.get('/', checkRole.isAdmin, userCtrl.getUsers);
 routerUser.post('/', checkRole.isAdmin, userCtrl.newUser);
-routerUser.get('/:id', checkRole.isAdmin, userCtrl.getUser);
+routerUser.get('/:id', checkRole.isSameA, userCtrl.getUser);
 routerUser.patch('/:id', checkRole.isSameA, userCtrl.modifyUser);
 routerUser.patch('/password/:id', checkRole.isSameStrict, userCtrl.modifyPassword);
 routerUser.delete('/:id', checkRole.isSameA, userCtrl.deleteUser);
