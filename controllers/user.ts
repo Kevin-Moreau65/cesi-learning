@@ -1,5 +1,5 @@
 import { user } from '../models/user';
-import { Controller } from '../utils/interface';
+import { Controller, User } from '../utils/interface';
 import * as bcrypt from 'bcrypt';
 export const getUsers: Controller = async (req, res) => {
 	const users = await user.find({});
@@ -7,10 +7,10 @@ export const getUsers: Controller = async (req, res) => {
 };
 export const getUser: Controller = async (req, res) => {
 	const { id } = req.params;
-	const usr = await user.findById(id);
+	const usr: User = await user.findById(id);
 	if (!usr) return res.status(404).json({ message: 'Utilisateur introuvable' });
-	const { email, nom, prenom } = usr;
-	const data = { email, nom, prenom };
+	const { email, nom, prenom, role } = usr;
+	const data = { email, nom, prenom, role };
 	return res.status(200).json({ message: 'OK', data });
 };
 export const newUser: Controller = async (req, res) => {
@@ -20,6 +20,36 @@ export const newUser: Controller = async (req, res) => {
 		return res.status(401).json({ message: 'Formulaire incorrect' });
 	}
 	if (usr) return res.status(409).json({ message: "L'email existe deja" });
-	const pwd = await bcrypt.hash(password, process.env.BCRYPT_SALT_ROUND);
-	const toCreate = await user.create({ nom, prenom, email, role });
+	const pwd = await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_ROUND));
+	const userCreated: User = await user.create({ nom, prenom, email, role, password: pwd });
+	return res.status(201).json({ nom, prenom, email, id: userCreated._id });
+};
+export const modifyUser: Controller = async (req, res) => {
+	const { nom, prenom, email, role } = req.body;
+	const { id } = req.params;
+	if (!id) return res.status(401).json({ message: 'Id manquant' });
+	if (!nom || !prenom || !email || !role) {
+		return res.status(401).json({ message: 'Info manquante' });
+	}
+	const usr = await user.findByIdAndUpdate(id, { nom, prenom, email, role });
+	if (!usr) return res.status(404).json({ message: 'User non trouvé' });
+	return res.status(200).json({ message: 'OK', data: { nom, email, prenom, role } });
+};
+export const modifyPassword: Controller = async (req, res) => {
+	const { id } = req.params;
+	const { password } = req.body;
+	if (!id || !password || password.length < 7) {
+		return res.status(401).json({ message: 'Formulaire incorrect' });
+	}
+	const pwd = await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_ROUND));
+	const usr = await user.findByIdAndUpdate(id, { password: pwd });
+	if (!usr) return res.status(404).json({ message: 'User non trouvé' });
+	return res.status(200).json({ message: 'OK' });
+};
+export const deleteUser: Controller = async (req, res) => {
+	const { id } = req.params;
+	if (!id) return res.status(401).json({ message: 'Id manquant' });
+	const usr = user.findByIdAndRemove(id);
+	if (!usr) return res.status(404).json({ message: 'User non trouvé' });
+	return res.status(201).json({ message: 'OK' });
 };

@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import { Middleware } from './interface';
+import { Middleware, Roles } from './interface';
 
 const extractBearer = (authorization: string | undefined) => {
 	if (typeof authorization !== 'string') {
@@ -18,11 +18,11 @@ export const checkTokenMiddleware: Middleware = (req, res, next) => {
 		return res.status(401).json({ message: 'Unauthorized' });
 	}
 
-	jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken: { id: string }) => {
+	jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken: { id: string; role: Roles }) => {
 		if (err) {
 			return res.status(401).json({ message: 'Bad token' });
 		}
-		res.locals = { id: decodedToken.id };
+		res.locals = { id: decodedToken.id, role: decodedToken.role };
 		next();
 	});
 };
