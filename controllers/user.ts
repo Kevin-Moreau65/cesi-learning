@@ -1,15 +1,25 @@
 import { user } from '../models/user';
-import { Controller, User } from '../utils/interface';
+import { Controller, Roles, User } from '../utils/interface';
 import * as bcrypt from 'bcrypt';
 export const getUsers: Controller = async (req, res) => {
 	const users = await user.find({});
 	return res.status(200).json({ message: 'OK', data: users });
 };
+const checkFind = (id: string, userId: string, role: Roles, userRole: Roles) => {
+	if (role === Roles.Admin || id === userId) return true;
+	if (role === Roles.Teacher && userRole !== Roles.Student) return false;
+	return true;
+};
 export const getUser: Controller = async (req, res) => {
 	const { id } = req.params;
+	const userId = res.locals.id;
+	const userRole = res.locals.role;
 	const usr: User = await user.findById(id);
 	if (!usr) return res.status(404).json({ message: 'Utilisateur introuvable' });
 	const { email, nom, prenom, role } = usr;
+	if (!checkFind(id, userId, userRole, role)) {
+		return res.status(401).json({ message: 'Unauthorized' });
+	}
 	const data = { email, nom, prenom, role };
 	return res.status(200).json({ message: 'OK', data });
 };
