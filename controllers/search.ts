@@ -1,5 +1,5 @@
-import { user } from '../models/user';
-import { Controller, Roles, User } from '../utils/interface';
+import { user } from '$models/user';
+import { Controller, Roles, User } from '$utils/interface';
 
 const search = async (role: Roles, param?: string) => {
 	let users: User[];

@@ -1,5 +1,5 @@
-import { user } from '../models/user';
-import { Controller, Roles, User } from '../utils/interface';
+import { user } from '$models/user';
+import { Controller, Roles, User } from '$utils/interface';
 import * as bcrypt from 'bcrypt';
 export const getUsers: Controller = async (req, res) => {
 	const users = await user.find({});
