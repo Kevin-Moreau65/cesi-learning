@@ -6,19 +6,19 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "baseUrl": ".",
+        "baseUrl": "./",
         "paths": {
-            "$routes": [
-                "./routes"
+            "$routes/*": [
+                "./routes/*"
             ],
-            "$controllers": [
-                "./controllers"
+            "$controllers/*": [
+                "./controllers/*"
             ],
-            "$utils": [
-                "./utils"
+            "$utils/*": [
+                "./utils/*"
             ],
-            "$models": [
-                "./models"
+            "$models/*": [
+                "models/*"
             ]
         }
     }
