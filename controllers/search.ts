@@ -5,7 +5,6 @@ const search = async (role: Roles, param?: string) => {
 	let users: User[];
 	if (param) {
 		const reg = new RegExp(param, 'i');
-		console.log(reg);
 		users = await user
 			.find({ role: role })
 			.or([{ nom: { $regex: reg } }, { prenom: { $regex: reg } }, { email: { $regex: reg } }]);

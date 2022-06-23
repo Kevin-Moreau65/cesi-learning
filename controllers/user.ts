@@ -26,8 +26,11 @@ export const getUser: Controller = async (req, res) => {
 export const newUser: Controller = async (req, res) => {
 	const { nom, prenom, email, password, role } = req.body;
 	const usr = await user.findOne({ email });
-	if (!password || password.length < 7 || !email || !prenom || !nom || !role) {
+	if (!password || !email || !prenom || !nom || !role) {
 		return res.status(401).json({ message: 'Formulaire incorrect' });
+	}
+	if (password.length < 7) {
+		return res.status(401).json({ message: 'Le mot de passe doit contenir plus de 6 caractères' });
 	}
 	if (usr) return res.status(409).json({ message: "L'email existe deja" });
 	const pwd = await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_ROUND));
