@@ -4,6 +4,20 @@
         "target": "esnext",
         "rootDir": "./",
         "esModuleInterop": true,
-        "allowJs": true
+        "baseUrl": "./",
+        "paths": {
+            "$routes/*": [
+                "./routes/*"
+            ],
+            "$controllers/*": [
+                "./controllers/*"
+            ],
+            "$utils/*": [
+                "./utils/*"
+            ],
+            "$models/*": [
+                "models/*"
+            ]
+            }
         }
     }

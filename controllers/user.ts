@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { user } from '../utils/microService';
+import { user } from '$utils/microService';
 
 export const newUser = async (req: Request, res: Response) => {
 	const { authorization } = req.headers;

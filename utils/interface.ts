@@ -4,5 +4,8 @@ export type Middleware = (
 	req: Request,
 	res: Response,
 	next: NextFunction
-) => NextFunction | Response;
-export type Controller = (req: Request, res: Response) => Response;
+) => NextFunction | Response | Promise<NextFunction | Response>;
+export type Controller = (
+	req: Request,
+	res: Response
+) => Response | Promise<Response>;

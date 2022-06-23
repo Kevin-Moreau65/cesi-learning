@@ -1,3 +1,4 @@
+import fetch from 'node-fetch';
 type urlParam = {
 	method: string;
 	path?: string;
@@ -25,7 +26,7 @@ export default class MicroService {
 			'Content-Type': 'application/json',
 			Authorization: token
 		};
-		let init: RequestInit;
+		let init;
 		if (method === 'GET') {
 			init = {
 				headers,
@@ -35,10 +36,10 @@ export default class MicroService {
 			init = {
 				headers,
 				method,
-				body: body ? JSON.stringify(body) : undefined
+				body: body ? JSON.stringify(body) : null
 			};
 		}
-		const res = await fetch(`${this.url}${part()}`, {
+		const res = await fetch(`http://${this.url}${part()}`, {
 			...init
 		});
 		const { status } = res;
@@ -69,4 +70,5 @@ export default class MicroService {
 		return res;
 	}
 }
-export const user = new MicroService(process.env.API_AUTH);
+export const auth = new MicroService(process.env.API_AUTH);
+export const user = new MicroService(process.env.API_USER);
