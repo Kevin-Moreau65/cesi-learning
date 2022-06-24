@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { Roles } from '$utils/interface';
+import { Roles } from 'utils/interface';
 const userSchema = new Schema({
 	email: {
 		type: Schema.Types.String,

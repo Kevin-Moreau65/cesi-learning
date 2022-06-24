@@ -1,10 +1,11 @@
-import { user } from '$models/user';
-import { Controller, Roles, User } from '$utils/interface';
+import { user } from 'models/user';
+import { Controller, Roles, User } from 'utils/interface';
 import * as bcrypt from 'bcrypt';
 export const getUsers: Controller = async (req, res) => {
 	const users = await user.find({});
 	return res.status(200).json({ message: 'OK', data: users });
 };
+const checkObjectId = new RegExp('^[0-9a-fA-F]{24}$');
 const checkFind = (id: string, userId: string, role: Roles, userRole: Roles) => {
 	if (role === Roles.Admin || id === userId) return true;
 	if (role === Roles.Teacher && userRole !== Roles.Student) return false;
@@ -14,6 +15,7 @@ export const getUser: Controller = async (req, res) => {
 	const { id } = req.params;
 	const userId = res.locals.id;
 	const userRole = res.locals.role;
+	if (!checkObjectId.test(id)) return res.status(404).json({ message: 'Utilisateur introuvable' });
 	const usr: User = await user.findById(id);
 	if (!usr) return res.status(404).json({ message: 'Utilisateur introuvable' });
 	const { email, nom, prenom, role } = usr;
@@ -27,10 +29,10 @@ export const newUser: Controller = async (req, res) => {
 	const { nom, prenom, email, password, role } = req.body;
 	const usr = await user.findOne({ email });
 	if (!password || !email || !prenom || !nom || !role) {
-		return res.status(401).json({ message: 'Formulaire incorrect' });
+		return res.status(400).json({ message: 'Formulaire incorrect' });
 	}
 	if (password.length < 7) {
-		return res.status(401).json({ message: 'Le mot de passe doit contenir plus de 6 caractères' });
+		return res.status(400).json({ message: 'Le mot de passe doit contenir plus de 6 caractères' });
 	}
 	if (usr) return res.status(409).json({ message: "L'email existe deja" });
 	const pwd = await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_ROUND));
@@ -62,7 +64,7 @@ export const modifyPassword: Controller = async (req, res) => {
 export const deleteUser: Controller = async (req, res) => {
 	const { id } = req.params;
 	if (!id) return res.status(401).json({ message: 'Id manquant' });
-	const usr = user.findByIdAndRemove(id);
+	const usr = await user.findByIdAndRemove(id);
 	if (!usr) return res.status(404).json({ message: 'User non trouvé' });
-	return res.status(201).json({ message: 'OK' });
+	return res.status(201).send();
 };

@@ -1,6 +1,6 @@
 import express from 'express';
-import checkRole from '$utils/checkRole';
-import * as searchCtrl from '$controllers/search';
+import checkRole from 'utils/checkRole';
+import * as searchCtrl from 'controllers/search';
 const routerSearch = express.Router();
 
 routerSearch.get('/student/:param?', checkRole.isTeacher, searchCtrl.getStudents);

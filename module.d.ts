@@ -9,5 +9,6 @@ declare namespace NodeJS {
 		DEFAULT_PRENOM: string;
 		DEFAULT_EMAIL: string;
 		DEFAULT_PASSWORD: string;
+		MONGO_TEST_URI: string;
 	}
 }

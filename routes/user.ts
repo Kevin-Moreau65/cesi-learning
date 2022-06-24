@@ -1,6 +1,6 @@
 import express from 'express';
-import * as userCtrl from '$controllers/user';
-import checkRole from '$utils/checkRole';
+import * as userCtrl from 'controllers/user';
+import checkRole from 'utils/checkRole';
 const routerUser = express.Router();
 routerUser.get('/', checkRole.isAdmin, userCtrl.getUsers);
 routerUser.post('/', checkRole.isAdmin, userCtrl.newUser);
