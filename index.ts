@@ -1,12 +1,12 @@
 import { user } from 'models/user';
 import { Roles } from 'utils/interface';
-import { createServer } from 'http';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-const app = createServer();
+import createServer from 'server';
 mongoose
 	.connect(process.env.MONGO_URI)
 	.then(async () => {
+		const app = createServer();
 		console.log('Connection a la base de donnée OK');
 		const users = await user.find();
 		if (users.length === 0) {
