@@ -3,6 +3,7 @@ import { Roles } from 'utils/interface';
 import { createServer } from 'http';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+const app = createServer();
 mongoose
 	.connect(process.env.MONGO_URI)
 	.then(async () => {
@@ -22,7 +23,6 @@ mongoose
 				password: pwd
 			});
 		}
-		const app = createServer();
 		app.listen(process.env.SERVER_PORT, () =>
 			console.log(`Le serveur est OK sur le port ${process.env.SERVER_PORT}`)
 		);
