@@ -17,5 +17,5 @@ export const login: Controller = async (req, res) => {
 	const token = jwt.sign({ id: usr._id, role: usr.role }, process.env.JWT_SECRET, {
 		expiresIn: process.env.JWT_DURING
 	});
-	return res.status(200).json({ message: 'OK', token, data: { nom, prenom } });
+	return res.status(200).json({ message: 'OK', token, data: { nom, prenom, role: usr.role } });
 };
