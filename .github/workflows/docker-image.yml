@@ -24,4 +24,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/cesi-learning-${{GITHUB_REF_NAME}}:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/cesi-learning-${{github.ref_name}}:latest
