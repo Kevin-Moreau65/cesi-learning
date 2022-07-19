@@ -1,11 +1,10 @@
 import express from 'express';
-import * as coursCtrl from '$controllers/cours';
-const routerCours = express.Router();
+import * as coursCtrl from 'controllers/cours';
 
-routerCours.get('/', coursCtrl.getCourss);
-routerCours.get('/:id', coursCtrl.getCours);
-routerCours.post('/', coursCtrl.newCours);
-routerCours.put('/:id', coursCtrl.modifyCours);
-routerCours.delete('/:id', coursCtrl.deleteCours);
-
-export default routerCours;
+const routerParcours = express.Router();
+routerParcours.get('/', coursCtrl.getCourss);
+routerParcours.post('/', coursCtrl.newCours);
+routerParcours.get('/:id', coursCtrl.getCours);
+routerParcours.patch('/:id', coursCtrl.modifyCours);
+routerParcours.delete('/:id', coursCtrl.deleteCours);
+export default routerParcours;
