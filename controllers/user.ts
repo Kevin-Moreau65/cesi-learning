@@ -13,7 +13,7 @@ export const newUser = async (req: Request, res: Response) => {
 export const modifyUser = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	const { authorization } = req.headers;
-	const response = await user.post({
+	const response = await user.patch({
 		path: `/user/${id}`,
 		body: { ...req.body },
 		token: authorization
