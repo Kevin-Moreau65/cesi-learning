@@ -73,3 +73,5 @@ export default class MicroService {
 export const auth = new MicroService(process.env.API_AUTH);
 export const user = new MicroService(process.env.API_USER);
 export const cours = new MicroService(process.env.API_COURS);
+export const projet = new MicroService(process.env.API_PROJET);
+export const parcours = new MicroService(process.env.API_PARCOURS);

@@ -22,6 +22,8 @@ app.get('/', (req, res) => res.status(200).send('Salut ca va ?'));
 app.use('/user', routerUser);
 app.use('/login', routerAuth);
 app.use('/cours', routerCours);
+app.use('/projet', routerCours);
+app.use('/parcours', routerCours);
 app.use('/search', routerSearch);
 app.use('*', (req, res) => res.status(404).send('Retour arrière frérot'));
 app.listen(process.env.SERVER_PORT, () => {
