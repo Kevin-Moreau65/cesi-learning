@@ -14,4 +14,4 @@ const parcoursSchema = new Schema({
 	}
 });
 
-export const parcours = mongoose.model('Cours', parcoursSchema);
+export const parcours = mongoose.model('Parcours', parcoursSchema);
