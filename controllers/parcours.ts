@@ -16,29 +16,31 @@ export const getParcours: Controller = async (req, res) => {
 	return res.status(200).json({ message: 'OK', data: parc });
 };
 export const newParcours: Controller = async (req, res) => {
-	const { nom, theme, projets } = req.body;
+	const { nom, description, theme, projets } = req.body;
 	const parc = await parcours.findOne({ nom });
-	if (!theme || !nom || !projets) {
+	if (!theme || !nom || !projets || !description) {
 		return res.status(400).json({ message: 'Formulaire incorrect' });
 	}
 	if (parc) return res.status(409).json({ message: 'Le parcours existe deja' });
 
 	const parcoursCreated: any = await parcours.create({
 		nom,
+		description,
 		theme,
 		projets
 	});
 	return res.status(201).json({ data: parcoursCreated });
 };
 export const modifyParcours: Controller = async (req, res) => {
-	const { nom, theme, projets } = req.body;
+	const { nom, description, theme, projets } = req.body;
 	const { id } = req.params;
 	if (!id) return res.status(401).json({ message: 'Id manquant' });
-	if (!nom || !theme || !projets) {
+	if (!nom || !description || !theme || !projets) {
 		return res.status(401).json({ message: 'Info manquante' });
 	}
 	const parc = await parcours.findByIdAndUpdate(id, {
 		nom,
+		description,
 		theme,
 		projets
 	});
