@@ -6,7 +6,7 @@ const coursSchema = new Schema({
 		required: [true, 'Le nom est requis']
 	},
 	description: {
-		type: String,
+		type: Schema.Types.String,
 		required: [true, 'Le contenu est requis'],
 		maxLength: 30
 	},
