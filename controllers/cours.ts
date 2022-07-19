@@ -16,15 +16,16 @@ export const getCours: Controller = async (req, res) => {
 	return res.status(200).json({ message: 'OK', data: crs });
 };
 export const newCours: Controller = async (req, res) => {
-	const { nom, contenu, ressouces, propriétaire } = req.body;
+	const { nom, description, contenu, ressouces, propriétaire } = req.body;
 	const crs = await cours.findOne({ nom });
-	if (!contenu || !nom || !ressouces || !propriétaire) {
+	if (!contenu || !nom || !description || !ressouces || !propriétaire) {
 		return res.status(400).json({ message: 'Formulaire incorrect' });
 	}
 	if (crs) return res.status(409).json({ message: 'Le cours existe deja' });
 
 	const coursCreated: any = await cours.create({
 		nom,
+		description,
 		contenu,
 		ressouces,
 		propriétaire
@@ -32,7 +33,7 @@ export const newCours: Controller = async (req, res) => {
 	return res.status(201).json({ data: coursCreated });
 };
 export const modifyCours: Controller = async (req, res) => {
-	const { nom, contenu, ressouces, propriétaire } = req.body;
+	const { nom, description, contenu, ressouces, propriétaire } = req.body;
 	const { id } = req.params;
 	if (!id) return res.status(401).json({ message: 'Id manquant' });
 	if (!nom || !contenu || !ressouces || !propriétaire) {
@@ -40,6 +41,7 @@ export const modifyCours: Controller = async (req, res) => {
 	}
 	const crs = await cours.findByIdAndUpdate(id, {
 		nom,
+		description,
 		contenu,
 		ressouces,
 		propriétaire
