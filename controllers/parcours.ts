@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { parcours } from '$utils/microService';
+import { cours } from '$utils/microService';
 
 export const newParcours = async (req: Request, res: Response) => {
 	const { authorization } = req.headers;
-	const response = await parcours.post({
+	const response = await cours.post({
 		path: '/parcours',
 		body: { ...req.body },
 		token: authorization
@@ -13,7 +13,7 @@ export const newParcours = async (req: Request, res: Response) => {
 export const modifyParcours = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	const { authorization } = req.headers;
-	const response = await parcours.post({
+	const response = await cours.post({
 		path: `/parcours/${id}`,
 		body: { ...req.body },
 		token: authorization
@@ -23,7 +23,7 @@ export const modifyParcours = async (req: Request, res: Response) => {
 export const deleteParcours = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	const { authorization } = req.headers;
-	const response = await parcours.delete({
+	const response = await cours.delete({
 		path: `/parcours/${id}`,
 		body: { ...req.body },
 		token: authorization
@@ -32,7 +32,7 @@ export const deleteParcours = async (req: Request, res: Response) => {
 };
 export const getParcourss = async (req: Request, res: Response) => {
 	const { authorization } = req.headers;
-	const response = await parcours.get({
+	const response = await cours.get({
 		path: '/parcours',
 		token: authorization
 	});
@@ -41,7 +41,7 @@ export const getParcourss = async (req: Request, res: Response) => {
 export const getParcours = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	const { authorization } = req.headers;
-	const response = await parcours.get({
+	const response = await cours.get({
 		path: `/parcours/${id}`,
 		token: authorization
 	});
