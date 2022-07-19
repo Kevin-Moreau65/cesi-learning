@@ -13,7 +13,7 @@ export const newCours = async (req: Request, res: Response) => {
 export const modifyCours = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	const { authorization } = req.headers;
-	const response = await cours.post({
+	const response = await cours.patch({
 		path: `/cours/${id}`,
 		body: { ...req.body },
 		token: authorization
