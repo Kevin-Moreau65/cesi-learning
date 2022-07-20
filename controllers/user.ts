@@ -66,5 +66,5 @@ export const deleteUser: Controller = async (req, res) => {
 	if (!id) return res.status(401).json({ message: 'Id manquant' });
 	const usr = await user.findByIdAndRemove(id);
 	if (!usr) return res.status(404).json({ message: 'User non trouvé' });
-	return res.status(204).json({ message: 'OK' });
+	return res.status(200).json({ message: 'OK' });
 };
