@@ -53,5 +53,5 @@ export const deleteCours: Controller = async (req, res) => {
 	if (!id) return res.status(401).json({ message: 'Id manquant' });
 	const crs = await cours.findByIdAndRemove(id);
 	if (!crs) return res.status(404).json({ message: 'Cours non trouvé' });
-	return res.status(201).send();
+	return res.status(200).json({ message: 'Cours supprimé' });
 };
