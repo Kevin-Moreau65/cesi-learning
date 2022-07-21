@@ -17,12 +17,14 @@ export const getCours: Controller = async (req, res) => {
 };
 export const newCours: Controller = async (req, res) => {
 	const { nom, description, contenu, ressouces } = req.body;
+	const propriétaire = res.locals.Id;
+	console.log(propriétaire);
+	console.log(res.locals);
 	const crs = await cours.findOne({ nom });
 	if (!contenu || !nom || !description || !ressouces) {
 		return res.status(400).json({ message: 'Formulaire incorrect' });
 	}
 	if (crs) return res.status(409).json({ message: 'Le cours existe deja' });
-	const propriétaire = res.locals.Id;
 	const coursCreated: any = await cours.create({
 		nom,
 		description,
