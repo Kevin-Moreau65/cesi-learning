@@ -33,18 +33,17 @@ export const newCours: Controller = async (req, res) => {
 	return res.status(201).json({ data: coursCreated });
 };
 export const modifyCours: Controller = async (req, res) => {
-	const { nom, description, contenu, ressouces, propriétaire } = req.body;
+	const { nom, description, contenu, ressouces } = req.body;
 	const { id } = req.params;
 	if (!id) return res.status(401).json({ message: 'Id manquant' });
-	if (!nom || !contenu || !ressouces || !propriétaire) {
+	if (!nom || !contenu || !ressouces) {
 		return res.status(401).json({ message: 'Info manquante' });
 	}
 	const crs = await cours.findByIdAndUpdate(id, {
 		nom,
 		description,
 		contenu,
-		ressouces,
-		propriétaire
+		ressouces
 	});
 	if (!crs) return res.status(404).json({ message: 'Cours non trouvé' });
 	return res.status(200).json({ message: 'OK', data: cours });
